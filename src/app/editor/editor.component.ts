@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Article, ArticlesService, Errors } from '../core';
@@ -23,9 +23,9 @@ export class EditorComponent implements OnInit {
   ) {
     // use the FormBuilder to create a form group
     this.articleForm = this.fb.group({
-      title: '',
-      description: '',
-      body: ''
+      'title': ['', Validators.required],
+      'description': ['', Validators.required],
+      'body': ['', Validators.required]
     });
 
     // Initialized tagList as empty array
