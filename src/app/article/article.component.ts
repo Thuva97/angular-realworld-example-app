@@ -69,14 +69,16 @@ export class ArticleComponent implements OnInit {
   }
 
   deleteArticle() {
+    if(confirm("Are you sure to delete this article")) {
     this.isDeleting = true;
-
+    
     this.articlesService.destroy(this.article.slug)
       .subscribe(
         success => {
           this.router.navigateByUrl('/');
         }
       );
+    }
   }
 
   populateComments() {
@@ -105,12 +107,15 @@ export class ArticleComponent implements OnInit {
   }
 
   onDeleteComment(comment) {
-    this.commentsService.destroy(comment.id, this.article.slug)
+    if(confirm("Are you sure to delete")) {
+      this.commentsService.destroy(comment.id, this.article.slug)
       .subscribe(
         success => {
           this.comments = this.comments.filter((item) => item !== comment);
         }
       );
+    }
+    
   }
 
 }

@@ -12,7 +12,7 @@
             <i class="ion-edit"></i> Edit Article
           </a>
 
-          <button class="btn btn-sm btn-outline-danger"
+          <button style="margin-left: 10px;" class="btn btn-sm btn-outline-danger"
             [ngClass]="{disabled: isDeleting}"
             (click)="deleteArticle()">
             <i class="ion-trash-a"></i> Delete Article
@@ -25,7 +25,7 @@
             (toggle)="onToggleFollowing($event)">
           </app-follow-button>
 
-          <app-favorite-button
+          <app-favorite-button style="margin-left: 10px;"
             [article]="article"
             (toggle)="onToggleFavorite($event)">
             {{ article.favorited ? 'Unfavorite' : 'Favorite' }} Article <span class="counter">({{ article.favoritesCount }})</span>
@@ -55,7 +55,7 @@
 
     <hr />
 
-    <div class="article-actions">
+    <!-- <div class="article-actions">
       <app-article-meta [article]="article">
 
           <span [hidden]="!canModify">
@@ -85,7 +85,7 @@
         </span>
 
       </app-article-meta>
-    </div>
+    </div> -->
 
     <div class="row">
       <div class="col-xs-12 col-md-8 offset-md-2">

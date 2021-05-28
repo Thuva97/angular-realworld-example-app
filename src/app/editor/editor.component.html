@@ -3,34 +3,47 @@
     <div class="row">
       <div class="col-md-10 offset-md-1 col-xs-12">
 
-        <app-list-errors [errors]="errors"></app-list-errors>
+        <!-- <app-list-errors [errors]="errors"></app-list-errors> -->
 
         <form [formGroup]="articleForm">
           <fieldset [disabled]="isSubmitting">
 
             <fieldset class="form-group">
-              <input class="form-control form-control-lg"
+              <label style="font-weight: bold;">Title</label>
+              <input class="form-control"
                 formControlName="title"
                 type="text"
                 placeholder="Article Title" />
+                <div *ngIf="errors.errors.title" style="color:#CF563C; font-weight: bold;">
+                  title {{errors.errors.title[0]}}
+              </div>
             </fieldset>
 
             <fieldset class="form-group">
+              <label style="font-weight: bold;">Description</label>
               <input class="form-control"
                 formControlName="description"
                 type="text"
                 placeholder="What's this article about?" />
+                <div *ngIf="errors.errors.description" style="color:#CF563C; font-weight: bold;">
+                  description {{errors.errors.description[0]}}
+              </div>
             </fieldset>
 
             <fieldset class="form-group">
+              <label style="font-weight: bold;">Body</label>
               <textarea class="form-control"
                 formControlName="body"
                 rows="8"
                 placeholder="Write your article (in markdown)">
               </textarea>
+              <div *ngIf="errors.errors.body" style="color:#CF563C; font-weight: bold;">
+                body {{errors.errors.body[0]}}
+            </div>
             </fieldset>
 
             <fieldset class="form-group">
+              <label style="font-weight: bold;">Tags</label>
               <input class="form-control"
                 type="text"
                 placeholder="Enter tags"
