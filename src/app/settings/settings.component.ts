@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import {passwordValidator} from '../shared/validators/password.validator'
 
-import { User, UserService } from '../core';
+import { Errors, User, UserService } from '../core';
 
 @Component({
   selector: 'app-settings-page',
@@ -11,7 +12,7 @@ import { User, UserService } from '../core';
 export class SettingsComponent implements OnInit {
   user: User = {} as User;
   settingsForm: FormGroup;
-  errors: Object = {};
+  errors: Errors = {errors: {}};
   isSubmitting = false;
 
   constructor(
@@ -25,8 +26,9 @@ export class SettingsComponent implements OnInit {
       username: '',
       bio: '',
       email: '',
-      password: ''
-    });
+      password: '',
+      password1:''
+    },{validators:passwordValidator});
     // Optional: subscribe to changes on the form
     // this.settingsForm.valueChanges.subscribe(values => this.updateUser(values));
   }
@@ -38,14 +40,11 @@ export class SettingsComponent implements OnInit {
     this.settingsForm.patchValue(this.user);
   }
 
-  logout() {
-    this.userService.purgeAuth();
-    this.router.navigateByUrl('/');
-  }
+  
 
   submitForm() {
     this.isSubmitting = true;
-
+    this.errors = {errors: {}};
     // update the model
     this.updateUser(this.settingsForm.value);
 
@@ -55,6 +54,7 @@ export class SettingsComponent implements OnInit {
       updatedUser => this.router.navigateByUrl('/profile/' + updatedUser.username),
       err => {
         this.errors = err;
+        console.log(this.errors);
         this.isSubmitting = false;
       }
     );

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import {passwordValidator} from '../shared/validators/password.validator'
 
 import { Errors, UserService } from '../core';
 
@@ -37,6 +38,9 @@ export class AuthComponent implements OnInit {
       // add form control for username if this is the register page
       if (this.authType === 'register') {
         this.authForm.addControl('username', new FormControl());
+        // this.authForm.get
+        this.authForm.addControl('password1', new FormControl());
+        this.authForm.setValidators(passwordValidator);
       }
     });
   }

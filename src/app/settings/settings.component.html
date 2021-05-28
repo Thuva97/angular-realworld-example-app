@@ -5,7 +5,7 @@
 
         <h1 class="text-xs-center">Your Settings</h1>
 
-        <app-list-errors [errors]="errors"></app-list-errors>
+        <!-- <app-list-errors [errors]="errors"></app-list-errors> -->
 
         <form [formGroup]="settingsForm" (ngSubmit)="submitForm()">
           <fieldset [disabled]="isSubmitting">
@@ -22,6 +22,9 @@
                 type="text"
                 placeholder="Username"
                 formControlName="username" />
+                <div *ngIf="errors.errors.username" style="color:#CF563C; font-weight: bold;">
+                  username {{errors.errors.username[0]}}
+                </div>
             </fieldset>
 
             <fieldset class="form-group">
@@ -37,6 +40,9 @@
                 type="email"
                 placeholder="Email"
                 formControlName="email" />
+              <div *ngIf="errors.errors.email" style="color:#CF563C; font-weight: bold;">
+                  email {{errors.errors.email[0]}}
+              </div>
             </fieldset>
 
             <fieldset class="form-group">
@@ -44,23 +50,26 @@
                 type="password"
                 placeholder="New Password"
                 formControlName="password" />
+              <div *ngIf="errors.errors.password" style="color:#CF563C; font-weight: bold;">
+                  password {{errors.errors.password[0]}}
+              </div>
             </fieldset>
+            <fieldset class="form-group">
+              <input class="form-control form-control-lg"
+                type="password"
+                placeholder="Re-enter Password"
+                formControlName="password1" />
+            </fieldset>
+            <div *ngIf="settingsForm.errors?.notMatched && settingsForm.get('password1').dirty" style="color:#CF563C; font-weight: bold;">Passwords not matched</div>
 
             <button class="btn btn-lg btn-primary pull-xs-right"
-              type="submit">
+              type="submit" [disabled]="!settingsForm.valid">
               Update Settings
             </button>
 
           </fieldset>
         </form>
 
-        <!-- Line break for logout button -->
-        <hr />
-
-        <button class="btn btn-outline-danger"
-          (click)="logout()">
-          Or click here to logout.
-        </button>
 
       </div>
     </div>

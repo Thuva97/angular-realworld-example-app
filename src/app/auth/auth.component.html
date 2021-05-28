@@ -8,31 +8,54 @@
           <a [routerLink]="['/login']" *ngIf="authType == 'register'">Have an account?</a>
           <a [routerLink]="['/register']" *ngIf="authType == 'login'">Need an account?</a>
         </p>
-        <app-list-errors [errors]="errors"></app-list-errors>
+        
         <form [formGroup]="authForm" (ngSubmit)="submitForm()">
           <fieldset [disabled]="isSubmitting">
-            <fieldset class="form-group">
+            <fieldset class="form-group" *ngIf="authType == 'register'">
+              <label style="font-weight: bold;">Username</label>
               <input
                 formControlName="username"
                 placeholder="Username"
                 class="form-control form-control-lg"
                 type="text"
-                *ngIf="authType == 'register'" />
+                />
+                <div *ngIf="errors.errors.username" style="color:#CF563C; font-weight: bold;">
+                    username {{errors.errors.username[0]}}
+                </div>
             </fieldset>
             <fieldset class="form-group">
+              <label style="font-weight: bold;">Email</label>
               <input
                 formControlName="email"
                 placeholder="Email"
                 class="form-control form-control-lg"
                 type="text" />
+              <div *ngIf="errors.errors.email" style="color:#CF563C; font-weight: bold;">
+                  email {{errors.errors.email[0]}}
+              </div>
             </fieldset>
             <fieldset class="form-group">
+              <label style="font-weight: bold;">Password</label>
               <input
                 formControlName="password"
                 placeholder="Password"
                 class="form-control form-control-lg"
                 type="password" />
+              <div *ngIf="errors.errors.password" style="color:#CF563C; font-weight: bold;">
+                  password {{errors.errors.password[0]}}
+              </div>
+              <app-list-errors *ngIf="authType == 'login'" [errors]="errors"></app-list-errors>
             </fieldset>
+            <fieldset class="form-group" *ngIf="authType == 'register'">
+              <label style="font-weight: bold;">Confirm Password</label>
+              <input
+                formControlName="password1"
+                placeholder="Re-enter Password"
+                class="form-control form-control-lg"
+                type="password" />
+                <div *ngIf="authForm.errors?.notMatched && authForm.get('password1').dirty" style="color:#CF563C; font-weight: bold;">Passwords not matched</div>
+            </fieldset>
+
             <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="!authForm.valid" type="submit">
               {{ title }}
             </button>
