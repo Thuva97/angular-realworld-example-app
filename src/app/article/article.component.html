@@ -1,5 +1,5 @@
 <div class="article-page">
-
+  <div *ngIf="alertIn" class="alert alert-success box-msg" role="alert"> Article {{alertIn}} successfully</div>
   <div class="banner">
     <div class="container">
       <h1>{{ article.title }}</h1>

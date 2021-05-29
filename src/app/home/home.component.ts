@@ -22,8 +22,11 @@ export class HomeComponent implements OnInit {
   };
   tags: Array<string> = [];
   tagsLoaded = false;
+  alertIn: any;
 
   ngOnInit() {
+    this.alertIn = history.state.data;
+    this.hideAlert();
     this.userService.isAuthenticated.subscribe(
       (authenticated) => {
         this.isAuthenticated = authenticated;
@@ -54,5 +57,11 @@ export class HomeComponent implements OnInit {
     // Otherwise, set the list object
     this.listConfig = {type: type, filters: filters};
   }
+  hideAlert(): void {
+    //wait 3 Seconds and hide
+    setTimeout(function() {
+        this.alertIn = false;
+    }.bind(this), 2500);
+   }
   
 }

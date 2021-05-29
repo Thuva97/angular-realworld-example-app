@@ -24,6 +24,7 @@ export class ArticleComponent implements OnInit {
   commentFormErrors = {};
   isSubmitting = false;
   isDeleting = false;
+  alertIn: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,6 +35,8 @@ export class ArticleComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.alertIn = history.state.data;
+    this.hideAlert();
     // Retreive the prefetched article
     this.route.data.subscribe(
       (data: { article: Article }) => {
@@ -75,7 +78,10 @@ export class ArticleComponent implements OnInit {
     this.articlesService.destroy(this.article.slug)
       .subscribe(
         success => {
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/',{state: {data: "Article deleted"}});
+        },
+        err => {
+          this.router.navigateByUrl('/',{state: {data: "There is an error in deleting"}});
         }
       );
     }
@@ -117,5 +123,12 @@ export class ArticleComponent implements OnInit {
     }
     
   }
+
+  hideAlert(): void {
+    //wait 3 Seconds and hide
+    setTimeout(function() {
+        this.alertIn = false;
+    }.bind(this), 2500);
+   }
 
 }

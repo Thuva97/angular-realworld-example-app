@@ -14,6 +14,7 @@ export class EditorComponent implements OnInit {
   tagField = new FormControl();
   errors: Errors = {errors: {}};
   isSubmitting = false;
+  alertOut: String = "created";
 
   constructor(
     private articlesService: ArticlesService,
@@ -40,6 +41,7 @@ export class EditorComponent implements OnInit {
     this.route.data.subscribe((data: { article: Article }) => {
       if (data.article) {
         this.article = data.article;
+        this.alertOut = "updated";
         this.articleForm.patchValue(data.article);
       }
     });
@@ -49,7 +51,7 @@ export class EditorComponent implements OnInit {
     // retrieve tag control
     const tag = this.tagField.value;
     // only add tag if it does not exist yet
-    if (this.article.tagList.indexOf(tag) < 0) {
+    if (this.article.tagList.indexOf(tag) < 0 && tag.trim().length!==0) {
       this.article.tagList.push(tag);
     }
     // clear the input
@@ -65,10 +67,11 @@ export class EditorComponent implements OnInit {
     this.errors = {errors: {}};
     // update the model
     this.updateArticle(this.articleForm.value);
+    // console.log(this.article)
 
     // post the changes
     this.articlesService.save(this.article).subscribe(
-      article => this.router.navigateByUrl('/article/' + article.slug),
+      article => this.router.navigateByUrl('/article/' + article.slug, {state: {data: this.alertOut}}),
       err => {
         this.errors = err;
         this.isSubmitting = false;
@@ -79,4 +82,6 @@ export class EditorComponent implements OnInit {
   updateArticle(values: Object) {
     Object.assign(this.article, values);
   }
+
+  
 }
